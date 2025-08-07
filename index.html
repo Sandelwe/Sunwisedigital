@@ -1,23 +1,534 @@
-<!doctype html>
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunwise Digital - Your Partner in Growth</title>
+    <!-- Using Tailwind CSS is an excellent choice for rapid development and responsive design. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .hero-bg {
+            background-color: #FEFBF6;
+        }
+        /* It's good practice to add these transition classes directly in the HTML with Tailwind,
+           but defining them here for consistency is also a valid approach. */
+        .cta-button {
+            transition: all 0.3s ease;
+        }
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+        .service-card {
+            transition: all 0.3s ease;
+            border: 1px solid #E5E7EB;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: #FDB813;
+            box-shadow: 0 8px 25px -5px rgb(0 0 0 / 0.1), 0 4px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        /* The active state styling is a nice touch for user orientation. */
+        .active-nav {
+            color: #FDB813;
+            font-weight: 600;
+        }
+        .nav-link {
+            transition: color 0.3s;
+        }
+        .nav-link:hover {
+            color: #FDB813;
+        }
 
-<html>
-    <head>
-        <meta charset="utf-8">
+        /* The fade-in animation is a great way to add a modern feel to the site. */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-up.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-        <title>Blank template</title>
+        /* A small adjustment for the timeline on mobile for better readability. */
+        @media (max-width: 768px) {
+          .wrap {
+            padding: 0 1rem;
+          }
+          .right-timeline, .left-timeline {
+            justify-content: flex-start;
+          }
+          .right-timeline > div:first-child, .left-timeline > div:first-child {
+            width: auto;
+          }
+          .left-timeline .order-1 {
+            order: 2;
+          }
+          .left-timeline .z-20 {
+            order: 1;
+          }
+        }
 
-        <!-- Load external CSS styles -->
-        <link rel="stylesheet" href="styles.css">
+        /* Spinner animation for the loading state */
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #FDB813;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800">
 
-    </head>
+    <!-- Header: Excellent use of a sticky header for consistent navigation. -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center" aria-label="Main Navigation">
+            <a href="#home" class="flex items-center space-x-2" aria-label="Sunwise Digital Home">
+                <!-- SVG Logo: Well-designed, self-contained SVG. No external image needed. -->
+                <svg width="40" height="40" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="100" cy="100" r="95" fill="url(#paint0_linear_170_2)"/>
+                    <path d="M100 145C124.853 145 145 124.853 145 100C145 75.1472 124.853 55 100 55C75.1472 55 55 75.1472 55 100C55 124.853 75.1472 145 100 145Z" fill="white" fill-opacity="0.9"/>
+                    <path d="M100 125C113.807 125 125 113.807 125 100C125 86.1929 113.807 75 100 75C86.1929 75 75 86.1929 75 100C75 113.807 86.1929 125 100 125Z" fill="#FDB813"/>
+                    <path d="M100 25V45" stroke="white" stroke-width="8" stroke-linecap="round"/>
+                    <path d="M100 155V175" stroke="white" stroke-width="8" stroke-linecap="round"/>
+                    <path d="M175 100H155" stroke="white" stroke-width="8" stroke-linecap="round"/>
+                    <path d="M45 100H25" stroke="white" stroke-width="8" stroke-linecap="round"/>
+                    <path d="M153.033 46.967L138.891 61.1094" stroke="white" stroke-width="8" stroke-linecap="round"/>
+                    <path d="M61.1094 138.891L46.967 153.033" stroke="white" stroke-width="8" stroke-linecap="round"/>
+                    <path d="M153.033 153.033L138.891 138.891" stroke="white" stroke-width="8" stroke-linecap="round"/>
+                    <path d="M61.1094 61.1094L46.967 46.967" stroke="white" stroke-width="8" stroke-linecap="round"/>
+                    <defs>
+                    <linearGradient id="paint0_linear_170_2" x1="100" y1="5" x2="100" y2="195" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#FDB813"/>
+                    <stop offset="1" stop-color="#F9A602"/>
+                    </linearGradient>
+                    </defs>
+                </svg>
+                <span class="text-2xl font-bold text-gray-800">Sunwise Digital</span>
+            </a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#home" class="nav-link active-nav">Home</a>
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#process" class="nav-link">Our Process</a>
+                <a href="#about" class="nav-link">About Us</a>
+            </div>
+            <a href="#contact" class="hidden md:block bg-yellow-500 text-white px-5 py-2 rounded-full font-semibold cta-button hover:bg-yellow-600">Get a Free Quote</a>
+            <!-- Accessibility improvement: Add aria-expanded and aria-controls for screen readers. -->
+            <button id="mobile-menu-button" class="md:hidden" aria-label="Open mobile menu" aria-controls="mobile-menu" aria-expanded="false">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+            <a href="#home" class="block py-2 nav-link active-nav">Home</a>
+            <a href="#services" class="block py-2 nav-link">Services</a>
+            <a href="#process" class="block py-2 nav-link">Our Process</a>
+            <a href="#about" class="block py-2 nav-link">About Us</a>
+            <a href="#contact" class="block mt-4 bg-yellow-500 text-white text-center px-5 py-2 rounded-full font-semibold cta-button hover:bg-yellow-600">Get a Free Quote</a>
+        </div>
+    </header>
 
-    <body>
+    <main>
+        <section id="home" class="hero-bg pt-20 pb-28">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight">Turn Clicks Into Customers.</h1>
+                <p class="mt-4 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">We build stunning websites and drive ready-to-buy leads directly to you through strategic social media marketing. Stop chasing clients, let them come to you.</p>
+                <div class="mt-8 flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="#services" class="w-full sm:w-auto bg-yellow-500 text-white px-8 py-4 rounded-full font-bold text-lg cta-button hover:bg-yellow-600">Explore Our Services</a>
+                    <a href="#contact" class="w-full sm:w-auto bg-gray-800 text-white px-8 py-4 rounded-full font-bold text-lg cta-button hover:bg-gray-900">Schedule a Free Call</a>
+                </div>
+            </div>
+        </section>
 
-        <h1>My awesome space</h1>
-        
-        <!-- Load external JavaScript -->
-        <script src="scripts.js"></script>
-        
-    </body>
+        <section id="services" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Our Core Services</h2>
+                    <p class="text-lg text-gray-600 mt-2 max-w-2xl mx-auto">Everything you need to establish a powerful online presence and generate real results.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-10">
+                    <div class="bg-gray-50 p-8 rounded-lg shadow-sm service-card">
+                        <h3 class="text-2xl font-bold mb-4 text-gray-900">Custom Website Design</h3>
+                        <p class="text-gray-600 mb-6">Get a professionally designed, mobile-friendly website that not only looks incredible but is built to convert visitors into leads. This is a one-time investment for a powerful digital asset.</p>
+                        <ul class="space-y-3 text-gray-700">
+                            <!-- Use of SVG for checkmarks is a great choice. -->
+                            <li class="flex items-center"><svg class="w-5 h-5 text-yellow-500 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Stunning, modern design</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 text-yellow-500 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Optimized for all devices</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 text-yellow-500 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Built for lead capture</li>
+                        </ul>
+                        <a href="#contact" class="mt-6 inline-block text-yellow-600 font-semibold hover:underline">Get a Website Quote &rarr;</a>
 
+                        <!-- NEW: Gemini API integration for website ideas -->
+                        <div class="mt-8 pt-6 border-t border-gray-200">
+                            <h4 class="text-xl font-bold mb-3 text-gray-900 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles text-purple-500 mr-2"><path d="M9.91 1.76l.35 3.53A2 2 0 0 0 12 6.55l3.53.35a2 2 0 0 1 1.34 1.34l.35 3.53a2 2 0 0 0 1.9 1.9l3.53.35a2 2 0 0 1 0 3.8l-3.53.35a2 2 0 0 0-1.9 1.9l-.35 3.53a2 2 0 0 1-1.34 1.34l-3.53.35a2 2 0 0 0-1.9-1.9l-.35-3.53a2 2 0 0 1-1.34-1.34l-3.53-.35a2 2 0 0 0-1.9-1.9l-.35-3.53a2 2 0 0 1 1.34-1.34l3.53-.35a2 2 0 0 0 1.9-1.9l.35-3.53a2 2 0 0 1 2.68-1.34Z"/><path d="M17 19l2 2"/><path d="M17 17l2 2"/></svg>
+                                Get Instant Website Ideas
+                            </h4>
+                            <p class="text-sm text-gray-500 mb-4">Enter your business type below for a custom website pitch!</p>
+                            <input type="text" id="business-input" placeholder="e.g., 'artisan coffee shop'" class="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                            <button id="idea-button" class="w-full bg-purple-500 text-white px-8 py-3 rounded-full font-bold text-lg cta-button hover:bg-purple-600 flex items-center justify-center space-x-2">
+                                <span id="button-text">✨ Get Website Ideas</span>
+                            </button>
+                            <div id="ideas-output" class="mt-6 p-4 bg-gray-100 rounded-lg hidden">
+                                <h5 class="text-lg font-bold mb-2">Your Website Idea</h5>
+                                <div id="ideas-content" class="text-sm text-gray-700 whitespace-pre-wrap"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 p-8 rounded-lg shadow-sm service-card">
+                        <h3 class="text-2xl font-bold mb-4 text-gray-900">Social Media Lead Generation</h3>
+                        <p class="text-gray-600 mb-6">Once your website is live, we drive highly targeted traffic through strategic social media campaigns. We don't just deliver clicks; we deliver potential customers.</p>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="flex items-center"><svg class="w-5 h-5 text-yellow-500 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Targeted ad campaigns</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 text-yellow-500 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Continuous optimization</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 text-yellow-500 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Flexible 3 or 6-month contracts</li>
+                        </ul>
+                        <a href="#contact" class="mt-6 inline-block text-yellow-600 font-semibold hover:underline">Start Driving Leads &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Process Section: The timeline is a very effective visual component. -->
+        <section id="process" class="py-20 bg-gray-50">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Our Simple Path to Your Success</h2>
+                    <p class="text-lg text-gray-600 mt-2 max-w-2xl mx-auto">A transparent and collaborative process designed for results.</p>
+                </div>
+                <div class="relative wrap overflow-hidden p-10 h-full">
+                    <div class="border-2-2 absolute border-opacity-20 border-gray-700 h-full border" style="left: 50%"></div>
+                    <!-- Using divs here is fine, but for semantic correctness, you could also use an ordered list (<ol>) for the timeline items. -->
+                    <div class="mb-8 flex justify-between items-center w-full right-timeline">
+                        <div class="order-1 w-5/12"></div>
+                        <div class="z-20 flex items-center order-1 bg-yellow-500 shadow-xl w-14 h-14 rounded-full">
+                            <h1 class="mx-auto font-semibold text-lg text-white">1</h1>
+                        </div>
+                        <div class="order-1 bg-white rounded-lg shadow-xl w-5/12 px-6 py-4 fade-in-up">
+                            <h3 class="font-bold text-gray-800 text-xl">Discovery & Strategy</h3>
+                            <p class="text-sm leading-snug tracking-wide text-gray-600 text-opacity-100 mt-1">We deep dive into your business, goals, and target audience to build a custom strategy for success.</p>
+                        </div>
+                    </div>
+                    <div class="mb-8 flex justify-between flex-row-reverse items-center w-full left-timeline">
+                        <div class="order-1 w-5/12"></div>
+                        <div class="z-20 flex items-center order-1 bg-yellow-500 shadow-xl w-14 h-14 rounded-full">
+                            <h1 class="mx-auto text-white font-semibold text-lg">2</h1>
+                        </div>
+                        <div class="order-1 bg-white rounded-lg shadow-xl w-5/12 px-6 py-4 fade-in-up">
+                            <h3 class="font-bold text-gray-800 text-xl">Website Creation</h3>
+                            <p class="text-sm leading-snug tracking-wide text-gray-600 text-opacity-100 mt-1">Our team designs and develops your high-converting website, keeping you in the loop with progress updates.</p>
+                        </div>
+                    </div>
+                    <div class="mb-8 flex justify-between items-center w-full right-timeline">
+                        <div class="order-1 w-5/12"></div>
+                        <div class="z-20 flex items-center order-1 bg-yellow-500 shadow-xl w-14 h-14 rounded-full">
+                            <h1 class="mx-auto font-semibold text-lg text-white">3</h1>
+                        </div>
+                        <div class="order-1 bg-white rounded-lg shadow-xl w-5/12 px-6 py-4 fade-in-up">
+                            <h3 class="font-bold text-gray-800 text-xl">Launch & Lead Generation</h3>
+                            <p class="text-sm leading-snug tracking-wide text-gray-600 text-opacity-100 mt-1">We launch your site and immediately start our targeted social media campaigns to drive traffic and capture leads.</p>
+                        </div>
+                    </div>
+                    <div class="mb-8 flex justify-between flex-row-reverse items-center w-full left-timeline">
+                        <div class="order-1 w-5/12"></div>
+                        <div class="z-20 flex items-center order-1 bg-yellow-500 shadow-xl w-14 h-14 rounded-full">
+                            <h1 class="mx-auto text-white font-semibold text-lg">4</h1>
+                        </div>
+                        <div class="order-1 bg-white rounded-lg shadow-xl w-5/12 px-6 py-4 fade-in-up">
+                            <h3 class="font-bold text-gray-800 text-xl">Deliver Ready-to-Buy Leads</h3>
+                            <p class="text-sm leading-snug tracking-wide text-gray-600 text-opacity-100 mt-1">You receive contact details of interested prospects. We handle the marketing so you can focus on closing deals.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="max-w-3xl mx-auto text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">We're More Than a Digital Agency.<br> We're Your Growth Partner.</h2>
+                    <p class="mt-4 text-lg text-gray-600">Sunwise Digital was founded on a simple idea: small and medium-sized businesses deserve access to the same high-quality digital marketing that big corporations enjoy. We're passionate about helping our clients succeed by creating a direct, predictable path to new customers.</p>
+                    <p class="mt-4 text-gray-600">Our approach is built on transparency, partnership, and a relentless focus on results. When you work with us, you're not just another client; you're a partner. Your growth is our growth.</p>
+                    <a href="#contact" class="mt-8 inline-block bg-yellow-500 text-white px-8 py-3 rounded-full font-semibold cta-button hover:bg-yellow-600">Let's Build Together</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section: The two-column layout for form and info is effective. -->
+        <section id="contact" class="py-20 bg-gray-800 text-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold">Ready to Grow Your Business?</h2>
+                    <p class="text-lg text-gray-300 mt-2">Fill out the form below for a free, no-obligation consultation.</p>
+                </div>
+                <div class="max-w-5xl mx-auto bg-white text-gray-800 rounded-lg shadow-xl p-8 md:grid md:grid-cols-2 md:gap-12">
+                    <div class="mb-8 md:mb-0">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Contact Information</h3>
+                        <p class="text-gray-600 mb-6">We're excited to hear from you! Reach out with any questions and let's start a conversation about your business.</p>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <!-- Using SVG icons is great for scalability and loading speed. -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-yellow-500"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /></svg>
+                                <span class="text-gray-700 font-medium">info@sunwisedigital.com</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-yellow-500"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                                <span class="text-gray-700 font-medium">+268 76856972</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-yellow-500"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                                <span class="text-gray-700 font-medium">Mbabane, Eswatini</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Send us a message</h3>
+                        <!-- Formspree is a good, simple solution for static sites.
+                             The note about replacing the ID is crucial for the user. -->
+                        <form action="https://formspree.io/f/xldlojba" method="POST" class="space-y-4">
+                            <div>
+                                <!-- Good use of 'for' and 'id' to associate labels with inputs,
+                                     which is important for accessibility. -->
+                                <label for="name" class="block mb-1.5 font-semibold text-sm">Full Name</label>
+                                <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" required>
+                            </div>
+                            <div>
+                                <label for="email" class="block mb-1.5 font-semibold text-sm">Email Address</label>
+                                <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" required>
+                            </div>
+                            <!-- Phone number field has been simplified into a single input -->
+                            <div>
+                                <label for="phone" class="block mb-1.5 font-semibold text-sm">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" placeholder="e.g., +268 76xxxxxx" required>
+                            </div>
+                            <div>
+                                <label for="service" class="block mb-1.5 font-semibold text-sm">I'm interested in...</label>
+                                <select id="service" name="service_interest" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                                    <option>Custom Website Design</option>
+                                    <option>Social Media Lead Generation</option>
+                                    <option>Both Website & Lead Generation</option>
+                                    <option>Just a General Inquiry</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="message" class="block mb-1.5 font-semibold text-sm">Tell us about your business</label>
+                                <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" required></textarea>
+                            </div>
+                            <div class="text-center pt-2">
+                                <button type="submit" class="w-full bg-yellow-500 text-white px-8 py-3 rounded-full font-bold text-lg cta-button hover:bg-yellow-600">Send My Request</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 text-white">
+        <div class="container mx-auto px-6 py-8">
+            <div class="md:flex md:justify-between">
+                <div class="mb-6 md:mb-0">
+                    <a href="#home" class="flex items-center space-x-2">
+                        <svg width="30" height="30" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="100" cy="100" r="95" fill="url(#paint0_linear_footer)"/>
+                            <path d="M100 145C124.853 145 145 124.853 145 100C145 75.1472 124.853 55 100 55C75.1472 55 55 75.1472 55 100C55 124.853 75.1472 145 100 145Z" fill="white" fill-opacity="0.9"/>
+                            <path d="M100 125C113.807 125 125 113.807 125 100C125 86.1929 113.807 75 100 75C86.1929 75 75 86.1929 75 100C75 113.807 86.1929 125 100 125Z" fill="#FDB813"/>
+                            <path d="M100 25V45" stroke="white" stroke-width="8" stroke-linecap="round"/><path d="M100 155V175" stroke="white" stroke-width="8" stroke-linecap="round"/><path d="M175 100H155" stroke="white" stroke-width="8" stroke-linecap="round"/><path d="M45 100H25" stroke="white" stroke-width="8" stroke-linecap="round"/><path d="M153.033 46.967L138.891 61.1094" stroke="white" stroke-width="8" stroke-linecap="round"/><path d="M61.1094 138.891L46.967 153.033" stroke="white" stroke-width="8" stroke-linecap="round"/><path d="M153.033 153.033L138.891 138.891" stroke="white" stroke-width="8" stroke-linecap="round"/><path d="M61.1094 61.1094L46.967 46.967" stroke="white" stroke-width="8" stroke-linecap="round"/>
+                            <defs>
+                            <linearGradient id="paint0_linear_footer" x1="100" y1="5" x2="100" y2="195" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#FDB813"/><stop offset="1" stop-color="#F9A602"/>
+                            </linearGradient>
+                            </defs>
+                        </svg>
+                        <span class="text-xl font-bold">Sunwise Digital</span>
+                    </a>
+                    <p class="mt-2 text-gray-400">Your Partner in Growth.</p>
+                </div>
+                <div class="grid grid-cols-2 gap-8 mt-4 md:mt-0">
+                    <div>
+                        <h2 class="mb-4 font-semibold uppercase">Navigate</h2>
+                        <ul class="text-gray-400 space-y-2">
+                            <li><a href="#about" class="hover:underline">About Us</a></li>
+                            <li><a href="#services" class="hover:underline">Services</a></li>
+                            <li><a href="#process" class="hover:underline">Our Process</a></li>
+                            <li><a href="#contact" class="hover:underline">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h2 class="mb-4 font-semibold uppercase">Follow us</h2>
+                        <ul class="text-gray-400 space-y-2">
+                            <li><a href="#" class="hover:underline">Facebook</a></li>
+                            <li><a href="#" class="hover:underline">Instagram</a></li>
+                            <li><a href="#" class="hover:underline">LinkedIn</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-6 border-gray-700">
+            <div class="text-center text-gray-500">
+                &copy; <span id="year"></span> Sunwise Digital. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle logic
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true' || false;
+            mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Set current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Smooth scrolling and close mobile menu on nav link click
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                if (this.getAttribute('href') !== '#') {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+                // Good logic to ensure the menu closes when a link is clicked.
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuButton.setAttribute('aria-expanded', 'false');
+                }
+            });
+        });
+
+        // Active navigation link styling on scroll
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('header nav a.nav-link');
+        const mobileNavLinks = document.querySelectorAll('#mobile-menu a.nav-link');
+
+        const activateNav = (current) => {
+            // Refactored to be more concise and avoid code duplication.
+            const allLinks = [...navLinks, ...mobileNavLinks];
+            allLinks.forEach(link => {
+                link.classList.remove('active-nav');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active-nav');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', () => {
+            let current = 'home';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                // Consider adding a variable for the header height to avoid hard-coding the '70'.
+                if (pageYOffset >= sectionTop - 70) {
+                    current = section.getAttribute('id');
+                }
+            });
+            activateNav(current);
+        });
+
+        // Intersection Observer for fade-in animations
+        const animatedElements = document.querySelectorAll('.fade-in-up');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    // Optional: You could unobserve the element once it's visible to optimize performance.
+                    // observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        animatedElements.forEach(el => {
+            observer.observe(el);
+        });
+
+        // NEW: Gemini API Integration Logic
+        const businessInput = document.getElementById('business-input');
+        const ideaButton = document.getElementById('idea-button');
+        const ideasOutput = document.getElementById('ideas-output');
+        const ideasContent = document.getElementById('ideas-content');
+        const buttonText = document.getElementById('button-text');
+
+        let isGenerating = false;
+
+        ideaButton.addEventListener('click', async () => {
+            if (isGenerating) return;
+
+            const businessType = businessInput.value.trim();
+            if (businessType === '') {
+                // Use a simple, non-blocking message to the user instead of alert()
+                ideasOutput.classList.remove('hidden');
+                ideasOutput.style.borderColor = 'rgb(239 68 68)'; // Red border for error
+                ideasContent.innerHTML = '<p class="text-red-600">Please enter a business type.</p>';
+                return;
+            }
+
+            // Set loading state
+            isGenerating = true;
+            ideasOutput.classList.remove('hidden');
+            ideasOutput.style.borderColor = 'rgb(249 250 251)';
+            buttonText.innerHTML = '<div class="spinner"></div>';
+
+            try {
+                const prompt = `Generate a creative website homepage title, a compelling subheading, and 3-4 key features for a website for a business that is a "${businessType}". Format the response using markdown headings and bullet points.`;
+                const chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                const payload = { contents: chatHistory };
+                const apiKey = "AIzaSyBE8sTVNsBOb90x0K151gwUrersxw16oGM";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API call failed with status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                if (text) {
+                    // Replace markdown with HTML for proper rendering
+                    let htmlContent = text.replace(/###\s*(.*)/g, '<h3>$1</h3>');
+                    htmlContent = htmlContent.replace(/##\s*(.*)/g, '<h2>$1</h2>');
+                    htmlContent = htmlContent.replace(/\*\s*(.*)/g, '<li>$1</li>');
+                    htmlContent = htmlContent.replace(/\n/g, '<br/>');
+                    ideasContent.innerHTML = htmlContent;
+                    ideasOutput.style.borderColor = 'rgb(253 184 19)'; // Yellow border for success
+                } else {
+                    ideasContent.innerHTML = '<p class="text-red-600">Failed to generate ideas. Please try again.</p>';
+                    ideasOutput.style.borderColor = 'rgb(239 68 68)'; // Red border for error
+                }
+
+            } catch (error) {
+                console.error('Error generating website ideas:', error);
+                ideasContent.innerHTML = '<p class="text-red-600">An error occurred. Please check the console and try again.</p>';
+                ideasOutput.style.borderColor = 'rgb(239 68 68)'; // Red border for error
+            } finally {
+                // Reset loading state
+                isGenerating = false;
+                buttonText.innerHTML = '✨ Get Website Ideas';
+            }
+        });
+    </script>
+</body>
 </html>
